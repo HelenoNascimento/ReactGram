@@ -7,14 +7,14 @@ export const requestConfig = (method, data, token = null, image = null) =>{
     let config
     if(image){
         config = {
-            method,
+            method: method,
             body: data,
-            headers:{}
+            headers:{},
         }
     }else if(method ==="DELETE" || data === null){
         config = {
             method,
-            headers:{}
+            headers:{},
         };
     }else{
         config = {
@@ -27,7 +27,7 @@ export const requestConfig = (method, data, token = null, image = null) =>{
     }
 
     if(token){
-        config.headersAuthorization = `Bearer ${token}` 
+        config.headers.Authorization = `Bearer ${token}`;
     }
 
     return config;
