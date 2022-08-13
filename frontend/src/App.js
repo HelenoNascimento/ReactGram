@@ -11,11 +11,12 @@ import { useAuth } from './hooks/useAuth';
 import Navbar from "./components/Navbar"
 import Footer from './components/Footer';
 
-
+//pages
 import Home from './pages/Home/Home';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
 import EditProfile from "./pages/EditProfile/EditProfile";
+import Profile from './pages/Profile/Profile';
 
 
 function App() {
@@ -36,8 +37,9 @@ function App() {
        <Routes>
           <Route path="/" element={auth ? <Home /> : <Navigate to="/login" />}/>
           <Route path="/profile" element={auth ? <EditProfile /> : <Navigate to="/login" />}/>
-          {/*Rotas autenticados abaixo */}
-          <Route path="/login" element={!auth ? <Login /> : <Navigate to="/home" />}/>
+          <Route path="/users/:id" element={auth ? <Profile /> : <Navigate to="/login" />}/>
+          {/*Rotas não autenticados abaixo */}
+          <Route path="/login" element={!auth ? <Login /> : <Navigate to="/login" />}/>
           <Route path="/register" element={!auth ? <Register /> : <Navigate to="/home" />}/>
         </Routes>
        </div>

@@ -44,19 +44,18 @@ const loginValidation = () =>{
             .withMessage("A senha é obrigatorio"),
     ];
 };
-const userUpdateValidation = () =>{
+const userUpdateValidation = () => {
     return [
-        body("name")
-            .optional()
-            .isLength({min:3})
-            .withMessage("o nome precisa de pelo menos 3 caracteres"),
-        body("password")
-            .optional()
-            .isLength({min:5})
-            .withMessage("A senha precisa ter no minimo 5 caracteres"),
-
+      body("name")
+        .optional()
+        .isLength({ min: 3 })
+        .withMessage("O nome precisa ter no mínimo 3 caracteres."),
+      body("password")
+        .optional()
+        .isLength({ min: 5 })
+        .withMessage("A senha precisa de no mínimo 5 caracteres."),
     ];
-};
+  };
 
 module.exports = {
     userCreateValidation,

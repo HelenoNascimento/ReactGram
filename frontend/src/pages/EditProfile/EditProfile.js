@@ -123,7 +123,7 @@ const handleFile = (e) =>{
         {!loading &&  <input type="submit" value="Atualizar" /> }
          {loading && <input type="submit" value="Aguarde..." disabled />}
          {error && <Message msg={error} type= "error" /> }
-         {message && <Message msg={message} type= "success" /> }
+        
       </form>
     </div>
   )
