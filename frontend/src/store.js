@@ -5,9 +5,13 @@ import userReducer from "./slices/userSlice"
 import photoReducer from "./slices/photoSlice";
 
 export const store = configureStore({
-    reducer: {
-        auth: authReducer,
-        user: userReducer,
-        photo: photoReducer,
-    },
+  reducer: {
+    auth: authReducer,
+    user: userReducer,
+    photo: photoReducer,
+    
+  },
+  
 });
+
+
