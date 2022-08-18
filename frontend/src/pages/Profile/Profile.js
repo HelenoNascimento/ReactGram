@@ -99,12 +99,14 @@ const handleDelete = (id) =>{
 
 //show or hide forms
 const hideOrShowForms = () =>{
+ 
   newPhotoForm.current.classList.toggle("hide");
   editPhotoForm.current.classList.toggle("hide");
 }
 
 // update a photo
 const handleUpdate = (e) =>{
+ 
   e.preventDefault();
 
   console.log(messagePhoto)
@@ -122,6 +124,7 @@ const handleUpdate = (e) =>{
 
 //open edit form
 const handleEdit = (photo) =>{
+  window.scrollTo(0, 200);
     if(editPhotoForm.current.classList.contains("hide")){
       hideOrShowForms();
     }
@@ -174,7 +177,7 @@ if(loading){
                     {loadingPhoto && <input type="submit" value="Aguarde..." disabled />}
                 </form>
           </div>
-          <div className="edit-photo hide" ref={editPhotoForm}>
+          <div className="edit-photo hide" ref={editPhotoForm} id="editPhotoForm">
             <p>Editando: </p>
             {editImage && (
                 <img className="image-show" src={`${uploads}/photos/${editImage}`} alt={editTitle} />
@@ -211,7 +214,7 @@ if(loading){
                     <Link  to={`/photos/${photo._id}`}>
                       <BsFillEyeFill />
                     </Link>
-                    <BsPencilFill onClick={() => handleEdit(photo)}/>
+                    <BsPencilFill onClick={() => handleEdit(photo) }/>
                     <BsXLg onClick={() => handleDelete(photo._id) } />
                     
                   </div>
