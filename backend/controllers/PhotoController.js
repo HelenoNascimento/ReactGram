@@ -134,8 +134,8 @@ const updatePhoto = async(req, res) =>{
         photo.image = image;
       }
     await photo.save()
-
-    res.status(200).json({photo, message: "Foto atualizada com sucesso!"})
+      
+    res.status(200).json({ photo, message: "Foto atualizada com sucesso!" });
   
 }
 

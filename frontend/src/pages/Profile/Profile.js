@@ -44,6 +44,13 @@ const Profile = () => {
 const newPhotoForm = useRef();
 const editPhotoForm = useRef();
 
+  // Load user data
+  useEffect(() => {
+    dispatch(getUserDetails(id));
+    dispatch(getUserPhotos(id));
+  
+  }, [dispatch, id]);
+
 
 const resetComponentMessage = () =>{
   setTimeout(() => {
@@ -81,12 +88,7 @@ const resetComponentMessage = () =>{
 
     resetComponentMessage()
   };
-  // Load user data
- useEffect(() => {
-  dispatch(getUserDetails(id));
-  dispatch(getUserPhotos(id));
 
-}, [dispatch, id]);
 
 
 // Deletar a foto
@@ -104,6 +106,10 @@ const hideOrShowForms = () =>{
 // update a photo
 const handleUpdate = (e) =>{
   e.preventDefault();
+
+  console.log(messagePhoto)
+  console.log(errorPhoto)
+  
   const photoData = {
     title: editTitle,
     id: editId,
@@ -184,8 +190,8 @@ if(loading){
                 <button className="cancel-btn" onClick={handleCancelEdit}>Cancelar edição</button>   
             </form>
           </div>
-          {errorPhoto && <Message msg={errorPhoto} type="error"/>}
-          {messagePhoto && <Message msg={messagePhoto} type="success"/>}
+          {errorPhoto && <Message msg={errorPhoto} type="error" />}
+          {messagePhoto && <Message msg={messagePhoto} type="success" />}
         </>
        )}
 
