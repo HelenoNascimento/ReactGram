@@ -101,12 +101,18 @@ const getPhotoById = async(req, res)=>{
 
 //update a photo
 const updatePhoto = async(req, res) =>{
-    const {id} = req.params;
-    const {title}= req.body;
-
-    const reqUser = req.user
-
-    const photo = await Photo.findById(id)
+    const { id } = req.params;
+    const { title } = req.body;
+  
+    let image;
+  
+    if (req.file) {
+      image = req.file.filename;
+    }
+  
+    const reqUser = req.user;
+  
+    const photo = await Photo.findById(id);
 
     if(!photo){
         res.status(404).json({errors: ["Foto não encontrada"]});
@@ -124,6 +130,9 @@ const updatePhoto = async(req, res) =>{
     if(title){
         photo.title = title
     }
+    if (image) {
+        photo.image = image;
+      }
     await photo.save()
 
     res.status(200).json({photo, message: "Foto atualizada com sucesso!"})

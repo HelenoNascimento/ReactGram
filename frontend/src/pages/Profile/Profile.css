@@ -21,6 +21,7 @@
 }
 
 img{
+    width: 100%;
     transform: scale(.9);
     transition: all 0.2s;
 }
@@ -28,3 +29,6 @@ img:hover{
     transform: scale(1);
 }
 
+.image-show{
+    
+}

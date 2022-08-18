@@ -15,7 +15,7 @@ import { useParams} from "react-router-dom";
 //redux
 
 import { getUserDetails } from "../../slices/userSlice";
-import { getUserPhotos, publishPhoto, resetMessage } from "../../slices/photoSlice";
+import { deletePhoto, getUserPhotos, publishPhoto, resetMessage, updatePhoto } from "../../slices/photoSlice";
 
 
 const Profile = () => {
@@ -35,6 +35,9 @@ const Profile = () => {
       const [title, setTitle] = useState("");
       const [image, setImage] = useState("");
 
+      const [editId, setEditId] = useState("");
+      const [editImage, setEditImage] = useState("");
+      const [editTitle, setEditTitle] = useState("");
 
 
 //New form and edi form ref
@@ -42,6 +45,11 @@ const newPhotoForm = useRef();
 const editPhotoForm = useRef();
 
 
+const resetComponentMessage = () =>{
+  setTimeout(() => {
+    dispatch(resetMessage());
+  }, 2000);
+}
  
 
   const handleFile = (e) =>{
@@ -71,19 +79,57 @@ const editPhotoForm = useRef();
 
     setTitle("");
 
-    setTimeout(() => {
-      dispatch(resetMessage());
-    }, 3000);
-
+    resetComponentMessage()
   };
   // Load user data
  useEffect(() => {
   dispatch(getUserDetails(id));
   dispatch(getUserPhotos(id));
-  console.log("teste")
-  
+
 }, [dispatch, id]);
-console.log(photos)
+
+
+// Deletar a foto
+const handleDelete = (id) =>{
+  dispatch(deletePhoto(id));
+  resetComponentMessage();
+}
+
+//show or hide forms
+const hideOrShowForms = () =>{
+  newPhotoForm.current.classList.toggle("hide");
+  editPhotoForm.current.classList.toggle("hide");
+}
+
+// update a photo
+const handleUpdate = (e) =>{
+  e.preventDefault();
+  const photoData = {
+    title: editTitle,
+    id: editId,
+  }
+
+  dispatch(updatePhoto(photoData));
+
+  resetComponentMessage();
+}
+
+//open edit form
+const handleEdit = (photo) =>{
+    if(editPhotoForm.current.classList.contains("hide")){
+      hideOrShowForms();
+    }
+
+    setEditId(photo._id)
+    setEditTitle(photo.title);
+    setEditImage(photo.image);
+ 
+}
+
+const handleCancelEdit = (e) =>{
+  hideOrShowForms();
+};
+
 if(loading){
     return <p>Carregando...</p>
 }
@@ -122,6 +168,22 @@ if(loading){
                     {loadingPhoto && <input type="submit" value="Aguarde..." disabled />}
                 </form>
           </div>
+          <div className="edit-photo hide" ref={editPhotoForm}>
+            <p>Editando: </p>
+            {editImage && (
+                <img className="image-show" src={`${uploads}/photos/${editImage}`} alt={editTitle} />
+            )}
+            <form onSubmit={handleUpdate}>
+
+                        <input type="text"
+                         placeholder="Insira um novo titulo" 
+                         onChange={(e) => setEditTitle(e.target.value)} 
+                         value={editTitle || ""}
+                        />           
+                <input type="submit" value="Atualizar"/> 
+                <button className="cancel-btn" onClick={handleCancelEdit}>Cancelar edição</button>   
+            </form>
+          </div>
           {errorPhoto && <Message msg={errorPhoto} type="error"/>}
           {messagePhoto && <Message msg={messagePhoto} type="success"/>}
         </>
@@ -143,8 +205,9 @@ if(loading){
                     <Link  to={`/photos/${photo._id}`}>
                       <BsFillEyeFill />
                     </Link>
-                    <BsPencilFill />
-                    <BsXLg />
+                    <BsPencilFill onClick={() => handleEdit(photo)}/>
+                    <BsXLg onClick={() => handleDelete(photo._id) } />
+                    
                   </div>
                 ): (<Link className="btn" to={`/photos/${photo._id}`}>Ver </Link>)}
               </div>
