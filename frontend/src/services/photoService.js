@@ -89,7 +89,7 @@ const like = async (id, token) =>{
       const res = await fetch(api + "/photos/like/" +id, config)
           .then((res) => res.json())
           .catch((err) => err);
-      
+      return res;
     } catch (error) {
       console.log(error);
     }

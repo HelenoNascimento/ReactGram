@@ -193,18 +193,19 @@ export const photoSlice = createSlice({
                 state.success = true;
                 state.error = null;
 
-                if(state.photo.likes){
-                    state.photo.likes.push(action.payload.userId)
-                }
+                if (state.photo.likes) {
+                    state.photo.likes.push(action.payload.userId);
+                  }
                
-                state.photos.map((photo) => {   
-                    if (photo._id === action.payload.photo.photoId) {
+                  state.photos.map((photo) => {
+                    if (photo._id === action.payload.photoId) {
                       return photo.likes.push(action.payload.userId);
                     }
                     return photo;
                   });
                 
-                state.message = action.payload.message;
+                  state.message = action.payload.message;
+                  console.log( state.message)
             })
             .addCase(like.rejected, (state, action) =>{
                 state.loading = false;
