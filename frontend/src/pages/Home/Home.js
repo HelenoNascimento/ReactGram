@@ -50,7 +50,7 @@ const Home = () => {
         <div key={photo._id}> 
         <PhotoItem photo={photo}/>
         <LikeContainer photo={photo} user={user} handleLike={handleLike}/>
-        <Link className="btn" to={`/photos/${photo._id}`}>BVer mais</Link>
+        <Link className="btn" to={`/photos/${photo._id}`}>Ver mais</Link>
         </div>
       ))}
       {photos && photos.length === 0 &&(
